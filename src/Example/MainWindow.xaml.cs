@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using System.Runtime.Serialization;
 using System.IO;
+using Microsoft.Win32;
 
 namespace Example {
     /// <summary>
@@ -232,7 +233,7 @@ namespace Example {
 
         private void btnRemoveFrameClick(object sender, RoutedEventArgs e)
         {
-            if (framesListBox.Items.Count > 1)
+            if (framesListBox.Items.Count > 2)
             {
                 int index = framesListBox.Items.IndexOf(framesListBox.SelectedItem);
                 int upper_value = Int32.Parse(((ListBoxItem)framesListBox.SelectedItem).Content.ToString().Split(' ')[1]);
@@ -291,79 +292,144 @@ namespace Example {
             ExampleScene.animation = false;
         }
 
+        private void onNewClicked(object sender, RoutedEventArgs e)
+        {
+            Curve.Frames.Clear();
+            framesListBox.Items.Clear();
+
+            Curve[] frame = Curve.TransformCurvesToRelativeCoordinates();
+            Curve.Frames.Add(frame);
+
+            ListBoxItem item = new ListBoxItem();
+
+            item.Content = "FRAME 1";
+            item.Selected += listBoxItemSelected;
+            framesListBox.Items.Add(item);
+            framesListBox.SelectedItem = item;
+
+            Curve[] frame2 = Curve.TransformCurvesToRelativeCoordinates();
+            Curve.Frames.Add(frame2);
+
+            ListBoxItem item2 = new ListBoxItem();
+
+            item2.Content = "FRAME 2";
+            item2.Selected += listBoxItemSelected;
+            framesListBox.Items.Add(item2);
+            framesListBox.SelectedItem = item2;
+        }
+
+        private void onExitClicked(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Close();
+        }
+
         private void onSaveClicked(object sender, RoutedEventArgs e)
         {
-            //Curve.Serialize();
+            string file_name;
 
-            try
-            {
-                Curve.WriteObject("FramesDataset.xml");
-                MessageBox.Show(Directory.GetCurrentDirectory());
-                //ReadObject("DataContractSerializerExample.xml");
-            }
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Xml file (*.xml)|*.xml|C# file (*.cs)|*.cs";
 
-            catch (SerializationException serExc)
-            {
-                MessageBox.Show("Serialization Failed");
-                MessageBox.Show(serExc.Message);
-            }
-            catch (Exception exc)
-            {
-                //MessageBox.Show(
-                //"The serialization operation failed: {0} StackTrace: {1}",
-                //exc.Message, exc.StackTrace);
-            }
+            if (saveFileDialog.ShowDialog() == true)
+            { 
+                file_name = saveFileDialog.FileName;
+              
 
-            finally
-            {
-                MessageBox.Show("Press <Enter> to exit....");
+                //Curve.Serialize();
+
+                try
+                {
+                    Curve.WriteObject(file_name);
+                    //ReadObject("DataContractSerializerExample.xml");
+                }
+
+                catch (SerializationException serExc)
+                {
+                    MessageBox.Show("Serialization Failed");
+                    MessageBox.Show(serExc.Message);
+                }
+                catch (Exception exc)
+                {
+                    //MessageBox.Show(
+                    //"The serialization operation failed: {0} StackTrace: {1}",
+                    //exc.Message, exc.StackTrace);
+                }
+
+                finally
+                {
+                    //MessageBox.Show("Press <Enter> to exit....");
                 
+                }
             }
+            
         }
 
         private void onOpenClicked(object sender, RoutedEventArgs e)
         {
+            var filePath = string.Empty;
+
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
+
+            openFileDialog.Filter = "Xml files (*.xml)|*.xml|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            //openFileDialog.RestoreDirectory = true;
+
+            //if (openFileDialog.ShowDialog() == true)
+            //    ;
+            //.Text = File.ReadAllText(openFileDialog.FileName);
             //Curve.Serialize();
+          
 
-            try
+            if (openFileDialog.ShowDialog() == true)
             {
-                Curve.ReadObject("FramesDataset.xml");
+                //Get the path of specified file
+                filePath = openFileDialog.FileName;
+
+                try
+                {
+                    Curve.ReadObject(filePath);
+                }
+
+                catch (SerializationException serExc)
+                {
+                    MessageBox.Show("Serialization Failed");
+                    MessageBox.Show(serExc.Message);
+                }
+                catch (Exception exc)
+                {
+                    //MessageBox.Show(
+                    //"The serialization operation failed: {0} StackTrace: {1}",
+                    //exc.Message, exc.StackTrace);
+                }
+
+                finally
+                {
+                    //MessageBox.Show("Press <Enter> to exit....");
+                }
+
+                framesListBox.Items.Clear();
+
+                ListBoxItem item = null;
+
+                for (int i = 0; i < Curve.Frames.Count; i++)
+                {
+
+                    item = new ListBoxItem();
+
+                    item.Content = "FRAME " + (i + 1).ToString();
+                    item.Selected += listBoxItemSelected;
+                    framesListBox.Items.Add(item);
+
+
+                }
+
+                framesListBox.SelectedItem = item;
             }
 
-            catch (SerializationException serExc)
-            {
-                MessageBox.Show("Serialization Failed");
-                MessageBox.Show(serExc.Message);
-            }
-            catch (Exception exc)
-            {
-                //MessageBox.Show(
-                //"The serialization operation failed: {0} StackTrace: {1}",
-                //exc.Message, exc.StackTrace);
-            }
-
-            finally
-            {
-                MessageBox.Show("Press <Enter> to exit....");
-            }
-
-            framesListBox.Items.Clear();
-
-            ListBoxItem item = null;
-
-            for (int i = 0; i < Curve.Frames.Count; i++)
-            {
-             
-                item = new ListBoxItem();
-
-                item.Content = "FRAME " + (i + 1).ToString();
-                item.Selected += listBoxItemSelected;
-                framesListBox.Items.Add(item);
-
-                
-            }
-
-            framesListBox.SelectedItem = item;
+            
 
             //for (int i = 0; i < count; i++)
             //{
