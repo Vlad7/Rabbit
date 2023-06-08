@@ -204,6 +204,8 @@ namespace Example {
                 (List<Curve[]>)ser.ReadObject(reader, true);
             reader.Close();
             fs.Close();
+
+            selectedFrame = 0;
             //Console.WriteLine(String.Format("{0} {1}, ID: {2}",
             //frame[0][0].GetRa(), frame[0][0].GetRb(),
             //frame[0][0].GetRc()));
@@ -322,7 +324,12 @@ namespace Example {
         public static bool renderTangentLines = false;
         public static bool renderSelectionRectangles = false;
 
-        
+        public static bool animation = false;
+
+        public static int currentAnimationFrame1 = 0;
+        public static int currentAnimationFrame2 = 1;
+
+
 
         //in vec4 a_Position;
 
@@ -347,12 +354,33 @@ namespace Example {
 
             if (ellapsed >= 1)
             {
-                sign = -1;
+                if (currentAnimationFrame1 != Curve.Frames.Count - 1)
+                {
+                    currentAnimationFrame1 += 1;
+                }
+                else
+                {
+                    currentAnimationFrame1 = 0;
+                }
+                if (currentAnimationFrame2 != Curve.Frames.Count - 1)
+                {
+                    currentAnimationFrame2 += 1;
+                }
+                else
+                {
+                    currentAnimationFrame2 = 0;
+                }
+                
+               
+                sign = 1;
+               
+                ellapsed = 0;
             }
+            /*(
             if(ellapsed <= 0)
             {
                 sign = 1;
-            }
+            }*/
 
             var c = Color4.FromHsv(new Vector4(alpha * hue, alpha * 0.75f, alpha * 0.75f, alpha));
             
@@ -376,7 +404,7 @@ namespace Example {
             //GL.VertexAttrib2(100, 10, 10);
 
             //GL.End();
-
+            
             
             DrawCurves(index, ellapsed);
             
@@ -396,11 +424,25 @@ namespace Example {
 
         public static void DrawSelectionRectangles(int id)
         {
-            for (int i = 0; i < Curve.Frames[id].Length; i++)
+            if (!animation)
             {
-                DrawSelectionRectangle(Curve.Frames[id][i].GetRa());
-                DrawSelectionRectangle(Curve.Frames[id][i].GetRb());
-                DrawSelectionRectangle(Curve.Frames[id][i].GetRc());
+                for (int i = 0; i < Curve.Frames[id].Length; i++)
+                {
+                    DrawSelectionRectangle(Curve.Frames[id][i].GetRa());
+                    DrawSelectionRectangle(Curve.Frames[id][i].GetRb());
+                    DrawSelectionRectangle(Curve.Frames[id][i].GetRc());
+                }
+            }
+
+            else
+            {
+                for (int i = 0; i < Curve.Result.Length; i++)
+                {
+
+                    DrawSelectionRectangle(Curve.Result[i].GetRa());
+                    DrawSelectionRectangle(Curve.Result[i].GetRb());
+                    DrawSelectionRectangle(Curve.Result[i].GetRc());
+                }
             }
             /*
             for (int i = 0; i < Curve.Result.Length; i++)
@@ -415,15 +457,22 @@ namespace Example {
 
         private static void DrawLines(int id)
         {
-            for (int i = 0; i < Curve.Frames[id].Length; i++)
+            if (!animation)
             {
-                DrawLine(Curve.Frames[id][i].GetRa(), Curve.Frames[id][i].GetRb(), Curve.Frames[id][i].GetRc());
+                for (int i = 0; i < Curve.Frames[id].Length; i++)
+                {
+                    DrawLine(Curve.Frames[id][i].GetRa(), Curve.Frames[id][i].GetRb(), Curve.Frames[id][i].GetRc());
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Curve.Result.Length; i++)
+                {
+                    DrawLine(Curve.Result[i].GetRa(), Curve.Result[i].GetRb(), Curve.Result[i].GetRc());
+                }
             }
             /*
-            for (int i = 0; i < Curve.Result.Length; i++)
-            {
-                DrawLine(Curve.Result[i].GetRa(), Curve.Result[i].GetRb(), Curve.Result[i].GetRc());
-            }*/
+            */
         }
 
         private static void DrawLine(Vector ra, Vector rb, Vector rc)
@@ -447,43 +496,49 @@ namespace Example {
 
         private static void DrawCurves(int index, float t)
         {
-            Curve[] curves = Curve.Frames[index];
-            for (int i = 0; i < curves.Length; i++)
+            if (!animation)
             {
-                Vector resRa = curves[i].GetRa();
-                Vector resRb = curves[i].GetRb();
-                Vector resRc = curves[i].GetRc();
+                Curve[] curves = Curve.Frames[index];
 
-                Vector[] curve_points = Curve.CalculateCurve(curves[i].GetRa(), curves[i].GetRb(), curves[i].GetRc());
-
-                DrawCurve(curve_points);
-            }
-
-            /*
-            for (int i = 0; i < Curve.RelativeCoordinateCurves.Length; i++)
-            {
-                Vector resRa = CalculateAnimationFrame(Curve.RelativeCoordinateCurves[i].GetRa(), Curve.RelativeCoordinateCurves2[i].GetRa(), t);
-                Vector resRb = CalculateAnimationFrame(Curve.RelativeCoordinateCurves[i].GetRb(), Curve.RelativeCoordinateCurves2[i].GetRb(), t);
-                Vector resRc = CalculateAnimationFrame(Curve.RelativeCoordinateCurves[i].GetRc(), Curve.RelativeCoordinateCurves2[i].GetRc(), t);
-               
-                Curve.Result[i] = new Curve(resRa, resRb, resRc);
-
-                //new Curve(Curve.RelativeCoordinateCurves[i].GetRa(), Curve.RelativeCoordinateCurves[i].GetRb(), Curve.RelativeCoordinateCurves[i].GetRc())
-                Vector [] curve_points = Curve.CalculateCurve(Curve.RelativeCoordinateCurves[i].GetRa(), Curve.RelativeCoordinateCurves[i].GetRb(), Curve.RelativeCoordinateCurves[i].GetRc());
-                Vector [] curve_points2 = Curve.CalculateCurve(Curve.RelativeCoordinateCurves2[i].GetRa(), Curve.RelativeCoordinateCurves2[i].GetRb(), Curve.RelativeCoordinateCurves2[i].GetRc());
-
-                Vector[] animation = new Vector[curve_points.Length]; 
-
-                for (int j = 0; j < curve_points.Length; j++)
+                for (int i = 0; i < curves.Length; i++)
                 {
-                    animation[j] = CalculateAnimationFrame(curve_points[j], curve_points2[j], t);
+                    Vector resRa = curves[i].GetRa();
+                    Vector resRb = curves[i].GetRb();
+                    Vector resRc = curves[i].GetRc();
+
+                    Vector[] curve_points = Curve.CalculateCurve(curves[i].GetRa(), curves[i].GetRb(), curves[i].GetRc());
+
+                    DrawCurve(curve_points);
                 }
-
-                DrawCurve(animation);
-                
-
             }
-            */
+            else
+            {
+
+                //int id = currentAnimationFrame;
+
+                for (int i = 0; i < Curve.Frames[currentAnimationFrame1].Length; i++)
+                {
+                    Vector resRa = CalculateAnimationFrame(Curve.Frames[currentAnimationFrame1][i].GetRa(), Curve.Frames[currentAnimationFrame2][i].GetRa(), t);
+                    Vector resRb = CalculateAnimationFrame(Curve.Frames[currentAnimationFrame1][i].GetRb(), Curve.Frames[currentAnimationFrame2][i].GetRb(), t);
+                    Vector resRc = CalculateAnimationFrame(Curve.Frames[currentAnimationFrame1][i].GetRc(), Curve.Frames[currentAnimationFrame2][i].GetRc(), t);
+
+                    Curve.Result[i] = new Curve(resRa, resRb, resRc);
+
+                    //new Curve(Curve.RelativeCoordinateCurves[i].GetRa(), Curve.RelativeCoordinateCurves[i].GetRb(), Curve.RelativeCoordinateCurves[i].GetRc())
+                    Vector[] curve_points = Curve.CalculateCurve(Curve.Frames[currentAnimationFrame1][i].GetRa(), Curve.Frames[currentAnimationFrame1][i].GetRb(), Curve.Frames[currentAnimationFrame1][i].GetRc());
+                    Vector[] curve_points2 = Curve.CalculateCurve(Curve.Frames[currentAnimationFrame2][i].GetRa(), Curve.Frames[currentAnimationFrame2][i].GetRb(), Curve.Frames[currentAnimationFrame2][i].GetRc());
+
+                    Vector[] animation = new Vector[curve_points.Length];
+
+                    for (int j = 0; j < curve_points.Length; j++)
+                    {
+                        animation[j] = CalculateAnimationFrame(curve_points[j], curve_points2[j], t);
+                    }
+
+                    DrawCurve(animation);
+
+                }
+            }
         }
 
         private static void DrawCurve(Vector[] curvePoints)

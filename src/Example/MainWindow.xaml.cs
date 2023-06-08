@@ -39,6 +39,16 @@ namespace Example {
             item.Selected += listBoxItemSelected;
             framesListBox.Items.Add(item);
             framesListBox.SelectedItem = item;
+
+            Curve[] frame2 = Curve.TransformCurvesToRelativeCoordinates();
+            Curve.Frames.Add(frame2);
+
+            ListBoxItem item2 = new ListBoxItem();
+
+            item2.Content = "FRAME 2";
+            item2.Selected += listBoxItemSelected;
+            framesListBox.Items.Add(item2);
+            framesListBox.SelectedItem = item2;
         }
 
         public void OnLoad(object sender, RoutedEventArgs e)
@@ -127,14 +137,55 @@ namespace Example {
 
         private void btnUpClick(object sender, RoutedEventArgs e)
         {
-            /*
-            for (int i = 0; i < Curve.Result.Length; i++)
+            
+            for (int i = 0; i < Curve.Frames[(int)Curve.selectedFrame
+                ].Length; i++)
             {
-                Curve.RelativeCoordinateCurves[i].SetRa(Curve.RelativeCoordinateCurves[i].GetRa() + new Vector(0, 0.01));
-                Curve.RelativeCoordinateCurves[i].SetRb(Curve.RelativeCoordinateCurves[i].GetRb() + new Vector(0, 0.01));
-                Curve.RelativeCoordinateCurves[i].SetRc(Curve.RelativeCoordinateCurves[i].GetRc() + new Vector(0, 0.01));
-            }*/
+                Curve.Frames[(int)Curve.selectedFrame][i].SetRa(Curve.Frames[(int)Curve.selectedFrame][i].GetRa() + new Vector(0, 0.01));
+                Curve.Frames[(int)Curve.selectedFrame][i].SetRb(Curve.Frames[(int)Curve.selectedFrame][i].GetRb() + new Vector(0, 0.01));
+                Curve.Frames[(int)Curve.selectedFrame][i].SetRc(Curve.Frames[(int)Curve.selectedFrame][i].GetRc() + new Vector(0, 0.01));
+            }
         }
+
+        private void btnDownClick(object sender, RoutedEventArgs e)
+        {
+
+            for (int i = 0; i < Curve.Frames[(int)Curve.selectedFrame].Length; i++)
+            {
+                Curve.Frames[(int)Curve.selectedFrame][i].SetRa(Curve.Frames[(int)Curve.selectedFrame][i].GetRa() + new Vector(0, -0.01));
+                Curve.Frames[(int)Curve.selectedFrame][i].SetRb(Curve.Frames[(int)Curve.selectedFrame][i].GetRb() + new Vector(0, -0.01));
+                Curve.Frames[(int)Curve.selectedFrame][i].SetRc(Curve.Frames[(int)Curve.selectedFrame][i].GetRc() + new Vector(0, -0.01));
+            }
+        }
+
+        private void btnRightClick(object sender, RoutedEventArgs e)
+        {
+
+            for (int i = 0; i < Curve.Frames[(int)Curve.selectedFrame].Length; i++)
+            {
+                Curve.Frames[(int)Curve.selectedFrame][i].SetRa(Curve.Frames[(int)Curve.selectedFrame][i].GetRa() + new Vector(0.01, 0));
+                Curve.Frames[(int)Curve.selectedFrame][i].SetRb(Curve.Frames[(int)Curve.selectedFrame][i].GetRb() + new Vector(0.01, 0));
+                Curve.Frames[(int)Curve.selectedFrame][i].SetRc(Curve.Frames[(int)Curve.selectedFrame][i].GetRc() + new Vector(0.01, 0));
+            }
+        }
+
+        private void btnLeftClick(object sender, RoutedEventArgs e)
+        {
+
+            for (int i = 0; i < Curve.Frames[(int)Curve.selectedFrame].Length; i++)
+            {
+                Curve.Frames[(int)Curve.selectedFrame][i].SetRa(Curve.Frames[(int)Curve.selectedFrame][i].GetRa() + new Vector(-0.01, 0));
+                Curve.Frames[(int)Curve.selectedFrame][i].SetRb(Curve.Frames[(int)Curve.selectedFrame][i].GetRb() + new Vector(-0.01, 0));
+                Curve.Frames[(int)Curve.selectedFrame][i].SetRc(Curve.Frames[(int)Curve.selectedFrame][i].GetRc() + new Vector(-0.01, 0));
+            }
+        }
+
+        private void sliderValueChanged(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(((Slider)sender).Value.ToString());
+          
+        }
+        
 
         private void btnAddFrameClick(object sender, RoutedEventArgs e)
         {
@@ -144,21 +195,39 @@ namespace Example {
         private void AddFrame()
         {
             ListBoxItem item = new ListBoxItem();
+            
 
-            int index = framesListBox.Items.IndexOf(framesListBox.SelectedItem) + 1;
+            int index = framesListBox.Items.IndexOf(framesListBox.SelectedItem);
 
             
-            item.Content = "FRAME " + (framesListBox.Items.Count + 1).ToString();
+            item.Content = "FRAME " + (index + 2).ToString();
             item.Selected += listBoxItemSelected;
-            framesListBox.Items.Insert(index, item);
+            framesListBox.Items.Insert(index + 1, item);
 
             
-            Curve[] frame = new Curve[Curve.Frames[index - 1].Length];
-            frame = Curve.DeepClone(Curve.Frames[index - 1]);
-            Curve.Frames.Insert(index, frame);
+            Curve[] frame = new Curve[Curve.Frames[index].Length];
+            frame = Curve.DeepClone(Curve.Frames[index]);
+            Curve.Frames.Insert(index + 1, frame);
 
             framesListBox.SelectedItem = item;
             //MessageBox.Show(Curve.Frames.Count.ToString());
+
+
+
+            //int upper_value = Int32.Parse(item.Content.ToString().Split(' ')[1]);
+
+            for (int i = index + 2; i < framesListBox.Items.Count; i++)
+            {
+                int old_index = Int32.Parse(((ListBoxItem)framesListBox.Items[i]).Content.ToString().Split(' ')[1]);
+
+                
+
+                    ((ListBoxItem)framesListBox.Items[i]).Content = "FRAME " + (old_index + 1).ToString();
+
+                
+            }
+
+            
         }
 
         private void btnRemoveFrameClick(object sender, RoutedEventArgs e)
@@ -199,18 +268,27 @@ namespace Example {
 
         private void listBoxItemSelected(object sender, RoutedEventArgs e)
         {
-            Curve.selectedFrame = Int32.Parse(((ListBoxItem)sender).Content.ToString().Split(' ')[1]) - 1;
+            Curve.selectedFrame = framesListBox.Items.IndexOf((ListBoxItem)sender);
+         
 
             ExampleScene.Render();
 
 
         }
 
-        private void toggleButtonChecked(object sender, RoutedEventArgs e)
+        private void playToggleButtonChecked(object sender, RoutedEventArgs e)
         {
-           
+
+            ExampleScene.animation = true;
+            ExampleScene.currentAnimationFrame1 = 0;
+            ExampleScene.currentAnimationFrame2 = 1;
 
 
+        }
+
+        private void playToggleButtonUnchecked(object sender, RoutedEventArgs e)
+        {
+            ExampleScene.animation = false;
         }
 
         private void onSaveClicked(object sender, RoutedEventArgs e)
@@ -249,7 +327,6 @@ namespace Example {
 
             try
             {
-                MessageBox.Show(Directory.GetCurrentDirectory());
                 Curve.ReadObject("FramesDataset.xml");
             }
 
@@ -270,25 +347,28 @@ namespace Example {
                 MessageBox.Show("Press <Enter> to exit....");
             }
 
-            //framesListBox.Items.Clear();
-            int count = framesListBox.Items.Count;
-            
-            for(int i = 0; i < Curve.Frames.Count; i++)
+            framesListBox.Items.Clear();
+
+            ListBoxItem item = null;
+
+            for (int i = 0; i < Curve.Frames.Count; i++)
             {
              
-                ListBoxItem item = new ListBoxItem();
+                item = new ListBoxItem();
 
                 item.Content = "FRAME " + (i + 1).ToString();
                 item.Selected += listBoxItemSelected;
                 framesListBox.Items.Add(item);
 
-                framesListBox.SelectedItem = item;
+                
             }
+
+            framesListBox.SelectedItem = item;
 
             //for (int i = 0; i < count; i++)
             //{
 
-             //   framesListBox.Items.RemoveAt(i);
+            //   framesListBox.Items.RemoveAt(i);
             //}
 
 
