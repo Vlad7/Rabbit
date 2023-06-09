@@ -78,8 +78,8 @@ namespace Example {
                 {
                     //Coordinates of pointer in range [-0.5; 0.5]
 
-                    double relativePointX = (e.GetPosition(this.OpenTkControl).X - this.OpenTkControl.ActualWidth / 2) / (this.OpenTkControl.ActualWidth / 2);
-                    double relativePointY = (this.OpenTkControl.ActualHeight - e.GetPosition(this.OpenTkControl).Y - this.OpenTkControl.ActualHeight / 2) / (this.OpenTkControl.ActualHeight / 2);
+                    float relativePointX = (float)((e.GetPosition(this.OpenTkControl).X - this.OpenTkControl.ActualWidth / 2) / (this.OpenTkControl.ActualWidth / 2));
+                    float relativePointY = (float)((this.OpenTkControl.ActualHeight - e.GetPosition(this.OpenTkControl).Y - this.OpenTkControl.ActualHeight / 2) / (this.OpenTkControl.ActualHeight / 2));
 
                     ExampleScene.TryMovePoint(relativePointX, relativePointY);
                 }
@@ -124,8 +124,8 @@ namespace Example {
 
         private void OpenTKControl_OnMouseDown(object sender, MouseEventArgs e)
         {       
-            double relativePointX = (e.GetPosition(this.OpenTkControl).X - this.OpenTkControl.ActualWidth / 2) / (this.OpenTkControl.ActualWidth / 2);
-            double relativePointY = (this.OpenTkControl.ActualHeight - e.GetPosition(this.OpenTkControl).Y - this.OpenTkControl.ActualHeight / 2) / (this.OpenTkControl.ActualHeight / 2);
+            float relativePointX = (float)((e.GetPosition(this.OpenTkControl).X - this.OpenTkControl.ActualWidth / 2) / (this.OpenTkControl.ActualWidth / 2));
+            float relativePointY = (float)((this.OpenTkControl.ActualHeight - e.GetPosition(this.OpenTkControl).Y - this.OpenTkControl.ActualHeight / 2) / (this.OpenTkControl.ActualHeight / 2));
 
             ExampleScene.FindPoint(relativePointX, relativePointY);
         }
@@ -142,43 +142,44 @@ namespace Example {
             for (int i = 0; i < Curve.Frames[(int)Curve.selectedFrame
                 ].Length; i++)
             {
+                /*
                 Curve.Frames[(int)Curve.selectedFrame][i].SetRa(Curve.Frames[(int)Curve.selectedFrame][i].GetRa() + new Vector(0, 0.01));
                 Curve.Frames[(int)Curve.selectedFrame][i].SetRb(Curve.Frames[(int)Curve.selectedFrame][i].GetRb() + new Vector(0, 0.01));
                 Curve.Frames[(int)Curve.selectedFrame][i].SetRc(Curve.Frames[(int)Curve.selectedFrame][i].GetRc() + new Vector(0, 0.01));
-            }
+            */}
         }
 
         private void btnDownClick(object sender, RoutedEventArgs e)
         {
 
             for (int i = 0; i < Curve.Frames[(int)Curve.selectedFrame].Length; i++)
-            {
+            {/*
                 Curve.Frames[(int)Curve.selectedFrame][i].SetRa(Curve.Frames[(int)Curve.selectedFrame][i].GetRa() + new Vector(0, -0.01));
                 Curve.Frames[(int)Curve.selectedFrame][i].SetRb(Curve.Frames[(int)Curve.selectedFrame][i].GetRb() + new Vector(0, -0.01));
                 Curve.Frames[(int)Curve.selectedFrame][i].SetRc(Curve.Frames[(int)Curve.selectedFrame][i].GetRc() + new Vector(0, -0.01));
-            }
+            */}
         }
 
         private void btnRightClick(object sender, RoutedEventArgs e)
         {
 
             for (int i = 0; i < Curve.Frames[(int)Curve.selectedFrame].Length; i++)
-            {
+            {/*
                 Curve.Frames[(int)Curve.selectedFrame][i].SetRa(Curve.Frames[(int)Curve.selectedFrame][i].GetRa() + new Vector(0.01, 0));
                 Curve.Frames[(int)Curve.selectedFrame][i].SetRb(Curve.Frames[(int)Curve.selectedFrame][i].GetRb() + new Vector(0.01, 0));
                 Curve.Frames[(int)Curve.selectedFrame][i].SetRc(Curve.Frames[(int)Curve.selectedFrame][i].GetRc() + new Vector(0.01, 0));
-            }
+            */}
         }
 
         private void btnLeftClick(object sender, RoutedEventArgs e)
         {
 
             for (int i = 0; i < Curve.Frames[(int)Curve.selectedFrame].Length; i++)
-            {
+            {/*
                 Curve.Frames[(int)Curve.selectedFrame][i].SetRa(Curve.Frames[(int)Curve.selectedFrame][i].GetRa() + new Vector(-0.01, 0));
                 Curve.Frames[(int)Curve.selectedFrame][i].SetRb(Curve.Frames[(int)Curve.selectedFrame][i].GetRb() + new Vector(-0.01, 0));
                 Curve.Frames[(int)Curve.selectedFrame][i].SetRc(Curve.Frames[(int)Curve.selectedFrame][i].GetRc() + new Vector(-0.01, 0));
-            }
+            */}
         }
 
         private void sliderValueChanged(object sender, RoutedEventArgs e)

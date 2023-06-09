@@ -21,40 +21,40 @@ namespace Example {
     public class Curve
     {
         [DataMember()]
-        private Vector r_a;
+        private Vector3 r_a;
 
         [DataMember()]
-        private Vector r_b;
+        private Vector3 r_b;
 
         [DataMember()]
-        private Vector r_c;
+        private Vector3 r_c;
         
-        public Vector GetRa()
+        public Vector3 GetRa()
         {
             return r_a;
         }
         
-        public void SetRa(Vector val)
+        public void SetRa(Vector3 val)
         {
             r_a = val;
         }
 
-        public Vector GetRb()
+        public Vector3 GetRb()
         {
             return r_b;
         }
 
-        public void SetRb(Vector val)
+        public void SetRb(Vector3 val)
         {
             r_b = val;
         }
 
-        public Vector GetRc()
+        public Vector3 GetRc()
         {
             return r_c;
         }
 
-        public void SetRc(Vector val)
+        public void SetRc(Vector3 val)
         {
             r_c = val;
         }
@@ -64,79 +64,79 @@ namespace Example {
 
         public static int? selectedFrame = null;
 
-        public static Curve[] UpLeftCoordinateCurvesInit = new Curve[] {new Curve(new Vector(180, 15), new Vector(190, 28),new Vector(170, 54)),
-                                             new Curve(new Vector(170, 54), new Vector (163.5, 60), new Vector(160.5, 62.5)),
-                                             new Curve(new Vector(160.5, 62.5), new Vector(157.5, 71),new Vector(157, 79.5)),
+        public static Curve[] UpLeftCoordinateCurvesInit = new Curve[] {new Curve(new Vector3(180, 15, 1), new Vector3(190, 28, 1),new Vector3(170, 54, 1)),
+                                             new Curve(new Vector3(170, 54, 1), new Vector3(163.5f, 60, 1), new Vector3(160.5f, 62.5f, 1)),
+                                             new Curve(new Vector3(160.5f, 62.5f, 1), new Vector3(157.5f, 71, 1), new Vector3(157, 79.5f, 1)),
 
-                                             new Curve(new Vector(157, 79.5), new Vector(169, 87),new Vector(167.5, 94.5)),
-                                             new Curve(new Vector(167.5, 94.5), new Vector(169, 100),new Vector(172.5, 104)),
-                                             new Curve(new Vector(172.5, 104), new Vector(176.5, 110),new Vector(176.5, 114.5)),
+                                             new Curve(new Vector3(157, 79.5f, 1), new Vector3(169, 87, 1),new Vector3(167.5f, 94.5f, 1)),
+                                             new Curve(new Vector3(167.5f, 94.5f, 1), new Vector3(169, 100, 1),new Vector3(172.5f, 104, 1)),
+                                             new Curve(new Vector3(172.5f, 104, 1), new Vector3(176.5f, 110, 1),new Vector3(176.5f, 114.5f, 1)),
 
-                                             new Curve(new Vector(176.5, 114.5), new Vector(177, 123),new Vector(167.5, 125)),
-                                             new Curve(new Vector(167.5, 125), new Vector(170, 130),new Vector(172, 135)),
-                                             new Curve(new Vector(172, 135), new Vector(175, 151.5),new Vector(169, 164)),      //
+                                             new Curve(new Vector3(176.5f, 114.5f, 1), new Vector3(177, 123, 1),new Vector3(167.5f, 125, 1)),
+                                             new Curve(new Vector3(167.5f, 125, 1), new Vector3(170, 130, 1),new Vector3(172, 135,1)),
+                                             new Curve(new Vector3(172, 135, 1), new Vector3(175, 151.5f, 1),new Vector3(169, 164, 1)),      //
 
-                                             new Curve(new Vector(169, 164), new Vector(167.5, 164.5),new Vector(166, 163.5)),
-                                             new Curve(new Vector(166, 163.5), new Vector(162, 173),new Vector(157, 176)),
-                                             new Curve(new Vector(157, 176), new Vector(157, 193),new Vector(175, 212.5)),
+                                             new Curve(new Vector3(169, 164, 1), new Vector3(167.5f, 164.5f, 1), new Vector3(166, 163.5f, 1)),
+                                             new Curve(new Vector3(166, 163.5f, 1), new Vector3(162, 173, 1),new Vector3(157, 176, 1)),
+                                             new Curve(new Vector3(157, 176, 1), new Vector3(157, 193, 1),new Vector3(175, 212.5f, 1)),
 
-                                             new Curve(new Vector(175, 212.5), new Vector(188, 215),new Vector(190, 223)),
-                                             new Curve(new Vector(190, 223), new Vector(183.5, 224),new Vector(176, 224.5)),
-                                             new Curve(new Vector(176, 224.5), new Vector(174, 225),new Vector(170, 224)),
+                                             new Curve(new Vector3(175, 212.5f, 1), new Vector3(188, 215, 1),new Vector3(190, 223, 1)),
+                                             new Curve(new Vector3(190, 223, 1), new Vector3(183.5f, 224, 1),new Vector3(176, 224.5f, 1)),
+                                             new Curve(new Vector3(176, 224.5f, 1), new Vector3(174, 225, 1),new Vector3(170, 224, 1)),
 
-                                             new Curve(new Vector(170, 224), new Vector(175.5, 226.5),new Vector(178, 228)),
-                                             new Curve(new Vector(178, 228), new Vector(179.5, 240.5),new Vector(175.5, 242)),
-                                             new Curve(new Vector(175.5, 242), new Vector(176.5, 246),new Vector(169.5, 242.5)), //18
+                                             new Curve(new Vector3(170, 224, 1), new Vector3(175.5f, 226.5f, 1),new Vector3(178, 228, 1)),
+                                             new Curve(new Vector3(178, 228, 1), new Vector3(179.5f, 240.5f, 1),new Vector3(175.5f, 242, 1)),
+                                             new Curve(new Vector3(175.5f, 242, 1), new Vector3(176.5f, 246, 1),new Vector3(169.5f, 242.5f, 1)), //18
 
-                                             new Curve(new Vector(169.5, 242.5), new Vector(168, 242),new Vector(166.5, 242)),
-                                             new Curve(new Vector(166.5, 242), new Vector(165, 240.5),new Vector(163, 240)),
-                                             new Curve(new Vector(163, 240), new Vector(155, 237.5),new Vector(151, 234.5)),
+                                             new Curve(new Vector3(169.5f, 242.5f, 1), new Vector3(168, 242, 1),new Vector3(166.5f, 242, 1)),
+                                             new Curve(new Vector3(166.5f, 242, 1), new Vector3(165, 240.5f, 1),new Vector3(163, 240, 1)),
+                                             new Curve(new Vector3(163, 240, 1), new Vector3(155, 237.5f, 1),new Vector3(151, 234.5f, 1)),
 
-                                             new Curve(new Vector(151, 234.5), new Vector(150, 218.5),new Vector(137, 193.5)),
-                                             new Curve(new Vector(137, 193.5), new Vector(132, 195.5),new Vector(128, 198.5)),
-                                             new Curve(new Vector(128, 198.5), new Vector(134, 204.5),new Vector(140, 207.5)),    //24
+                                             new Curve(new Vector3(151, 234.5f, 1), new Vector3(150, 218.5f, 1),new Vector3(137, 193.5f, 1)),
+                                             new Curve(new Vector3(137, 193.5f, 1), new Vector3(132, 195.5f, 1),new Vector3(128, 198.5f, 1)),
+                                             new Curve(new Vector3(128, 198.5f, 1), new Vector3(134, 204.5f, 1),new Vector3(140, 207.5f, 1)),    //24
 
-                                             new Curve(new Vector(140, 207.5), new Vector(139.5, 212.5),new Vector(128.5, 211)),
-                                             new Curve(new Vector(128.5, 211), new Vector(120.5, 217.5),new Vector(94, 210)),
-                                             new Curve(new Vector(94, 210), new Vector(87, 215),new Vector(79, 221.5)),
+                                             new Curve(new Vector3(140, 207.5f, 1), new Vector3(139.5f, 212.5f, 1),new Vector3(128.5f, 211, 1)),
+                                             new Curve(new Vector3(128.5f, 211, 1), new Vector3(120.5f, 217.5f, 1),new Vector3(94, 210, 1)),
+                                             new Curve(new Vector3(94, 210, 1), new Vector3(87, 215, 1),new Vector3(79, 221.5f, 1)),
 
-                                             new Curve(new Vector(79, 221.5), new Vector(86.5, 228),new Vector(110.5, 229)),
-                                             new Curve(new Vector(110.5, 229), new Vector(124, 238.5),new Vector(122, 251)),
-                                             new Curve(new Vector(122, 251), new Vector(120, 252.5),new Vector(119, 254.5)),       //30
+                                             new Curve(new Vector3(79, 221.5f, 1), new Vector3(86.5f, 228, 1),new Vector3(110.5f, 229, 1)),
+                                             new Curve(new Vector3(110.5f, 229, 1), new Vector3(124, 238.5f, 1),new Vector3(122, 251, 1)),
+                                             new Curve(new Vector3(122, 251, 1), new Vector3(120, 252.5f, 1),new Vector3(119, 254.5f, 1)),       //30
 
-                                             new Curve(new Vector(119, 254.5), new Vector(109.5, 255),new Vector(97.5, 244)),
-                                             new Curve(new Vector(97.5, 244), new Vector(63.5, 231.5),new Vector(62, 227.5)),
-                                             new Curve(new Vector(62, 227.5), new Vector(67.5, 221.5),new Vector(68, 211.5)),
+                                             new Curve(new Vector3(119, 254.5f, 1), new Vector3(109.5f, 255, 1),new Vector3(97.5f, 244, 1)),
+                                             new Curve(new Vector3(97.5f, 244, 1), new Vector3(63.5f, 231.5f, 1),new Vector3(62, 227.5f, 1)),
+                                             new Curve(new Vector3(62, 227.5f, 1), new Vector3(67.5f, 221.5f, 1),new Vector3(68, 211.5f, 1)),
 
-                                             new Curve(new Vector(68, 211.5), new Vector(64, 204),new Vector(57, 204)),
-                                             new Curve(new Vector(57, 204), new Vector(48.5, 211),new Vector(41, 205)),
-                                             new Curve(new Vector(41, 205), new Vector(33.5, 199),new Vector(41, 190)),//36
+                                             new Curve(new Vector3(68, 211.5f, 1), new Vector3(64, 204, 1),new Vector3(57, 204, 1)),
+                                             new Curve(new Vector3(57, 204, 1), new Vector3(48.5f, 211, 1),new Vector3(41, 205, 1)),
+                                             new Curve(new Vector3(41, 205, 1), new Vector3(33.5f, 199, 1),new Vector3(41, 190, 1)),//36
 
-                                             new Curve(new Vector(41, 190), new Vector(38.5, 180.5),new Vector(40, 177.5)),
-                                             new Curve(new Vector(40, 177.5), new Vector(43, 145),new Vector(52, 137)),
-                                             new Curve(new Vector(52, 137), new Vector(55.5, 136),new Vector(58, 130)),
+                                             new Curve(new Vector3(41, 190, 1), new Vector3(38.5f, 180.5f, 1),new Vector3(40, 177.5f, 1)),
+                                             new Curve(new Vector3(40, 177.5f, 1), new Vector3(43, 145, 1),new Vector3(52, 137, 1)),
+                                             new Curve(new Vector3(52, 137, 1), new Vector3(55.5f, 136, 1),new Vector3(58, 130, 1)),
 
-                                             new Curve(new Vector(58, 130), new Vector(58, 125),new Vector(65, 121)),
-                                             new Curve(new Vector(65, 121), new Vector(68.5, 117),new Vector(82, 115)),
-                                             new Curve(new Vector(82, 115), new Vector(87, 115),new Vector(94, 114)),
+                                             new Curve(new Vector3(58, 130, 1), new Vector3(58, 125, 1),new Vector3(65, 121, 1)),
+                                             new Curve(new Vector3(65, 121, 1), new Vector3(68.5f, 117, 1),new Vector3(82, 115, 1)),
+                                             new Curve(new Vector3(82, 115, 1), new Vector3(87, 115, 1),new Vector3(94, 114, 1)),
 
-                                             new Curve(new Vector(94, 114), new Vector(99.5, 113),new Vector(102.5, 112.5)),
-                                             new Curve(new Vector(102.5, 112.5), new Vector(111.5, 113.5),new Vector(115.5, 110)),
-                                             new Curve(new Vector(115.5, 110), new Vector(122.5, 110.5),new Vector(125, 105)),
+                                             new Curve(new Vector3(94, 114, 1), new Vector3(99.5f, 113, 1),new Vector3(102.5f, 112.5f, 1)),
+                                             new Curve(new Vector3(102.5f, 112.5f, 1), new Vector3(111.5f, 113.5f, 1),new Vector3(115.5f, 110, 1)),
+                                             new Curve(new Vector3(115.5f, 110, 1), new Vector3(122.5f, 110.5f, 1),new Vector3(125, 105, 1)),
 
-                                             new Curve(new Vector(125, 105), new Vector(130, 104.5),new Vector(130.5, 91)),
-                                             new Curve(new Vector(130.5, 91), new Vector(130, 104.5),new Vector(130, 97.5)),
-                                             new Curve(new Vector(130, 97.5), new Vector(130.5, 91),new Vector(132.5, 87)), //48
+                                             new Curve(new Vector3(125, 105, 1), new Vector3(130, 104.5f, 1),new Vector3(130.5f, 91, 1)),
+                                             new Curve(new Vector3(130.5f, 91, 1), new Vector3(130, 104.5f, 1),new Vector3(130, 97.5f, 1)),
+                                             new Curve(new Vector3(130, 97.5f, 1), new Vector3(130.5f, 91, 1),new Vector3(132.5f, 87, 1)), //48
 
-                                             new Curve(new Vector(132.5, 87), new Vector(134.5, 82),new Vector(130, 75)),
-                                             new Curve(new Vector(130, 75), new Vector(99, 60),new Vector(89, 26)),
-                                             new Curve(new Vector(89, 26), new Vector(87, 10),new Vector(119, 33)),
+                                             new Curve(new Vector3(132.5f, 87, 1), new Vector3(134.5f, 82, 1),new Vector3(130, 75, 1)),
+                                             new Curve(new Vector3(130, 75, 1), new Vector3(99, 60, 1),new Vector3(89, 26, 1)),
+                                             new Curve(new Vector3(89, 26, 1), new Vector3(87, 10, 1),new Vector3(119, 33, 1)),
 
-                                             new Curve(new Vector(119, 33), new Vector(134, 42),new Vector(144.5, 77.5)),
-                                             new Curve(new Vector(144.5, 77.5), new Vector(144.5, 77.5),new Vector(149, 77)),
-                                             new Curve(new Vector(149, 77), new Vector(142, 57),new Vector(163, 27)),
+                                             new Curve(new Vector3(119, 33, 1), new Vector3(134, 42, 1),new Vector3(144.5f, 77.5f, 1)),
+                                             new Curve(new Vector3(144.5f, 77.5f, 1), new Vector3(144.5f, 77.5f, 1),new Vector3(149, 77, 1)),
+                                             new Curve(new Vector3(149, 77, 1), new Vector3(142, 57, 1),new Vector3(163, 27, 1)),
 
-                                             new Curve(new Vector(163, 27), new Vector(174.5, 15.5),new Vector(180, 15))    //55
+                                             new Curve(new Vector3(163, 27, 1), new Vector3(174.5f, 15.5f, 1),new Vector3(180, 15, 1))    //55
                                                 };
 
 
@@ -234,7 +234,7 @@ namespace Example {
             }
         }
 
-        public Curve(Vector Ra, Vector Rb, Vector Rc)
+        public Curve(Vector3 Ra, Vector3 Rb, Vector3 Rc)
         {
             this.r_a = Ra;
             this.r_b = Rb;
@@ -247,7 +247,11 @@ namespace Example {
 
             for (int i = 0; i < UpLeftCoordinateCurvesInit.Length; i++)
             {
-                frame[i] = new Curve(new Vector(TransformPointX(Curve.UpLeftCoordinateCurvesInit[i].GetRa().X), TransformPointY(Curve.UpLeftCoordinateCurvesInit[i].GetRa().Y)), new Vector(TransformPointX(Curve.UpLeftCoordinateCurvesInit[i].GetRb().X), TransformPointY(Curve.UpLeftCoordinateCurvesInit[i].GetRb().Y)), new Vector(TransformPointX(Curve.UpLeftCoordinateCurvesInit[i].GetRc().X), TransformPointY(Curve.UpLeftCoordinateCurvesInit[i].GetRc().Y)));
+                Vector3 pointRa = new Vector3((float)TransformPointX(Curve.UpLeftCoordinateCurvesInit[i].GetRa().X), (float)TransformPointY(Curve.UpLeftCoordinateCurvesInit[i].GetRa().Y), 1);
+                Vector3 pointRb = new Vector3((float)TransformPointX(Curve.UpLeftCoordinateCurvesInit[i].GetRb().X), (float)TransformPointY(Curve.UpLeftCoordinateCurvesInit[i].GetRb().Y), 1);
+                Vector3 pointRc = new Vector3((float)TransformPointX(Curve.UpLeftCoordinateCurvesInit[i].GetRc().X), (float)TransformPointY(Curve.UpLeftCoordinateCurvesInit[i].GetRc().Y), 1);
+                
+                frame[i] = new Curve(pointRa, pointRb, pointRc);
             }
 
             return frame;
@@ -262,29 +266,29 @@ namespace Example {
         {
             return ((fieldHeight - (y - 10)) - fieldHeight / 2) / (fieldHeight / 2);
         }
-        public static Vector[] CalculateCurve(Vector ra, Vector rb, Vector rc)
+        public static Vector3[] CalculateCurve(Vector3 ra, Vector3 rb, Vector3 rc)
         {
-            Vector Ra = ra;
-            Vector Rb = rb;
-            Vector Rc = rc;
+            Vector3 Ra = ra;
+            Vector3 Rb = rb;
+            Vector3 Rc = rc;
 
             //Bezier curve of second order
 
-            Double Wa, Wb, Wc;
+            float Wa, Wb, Wc;
 
             Wa = 1;
             Wb = 1;
             Wc = 1;
 
-            Double u = 0;
+            float u = 0;
 
-            Double step = 0.005;
+            float step = 0.005f;
 
             int array_length = (int)(1 / step) + 1;
 
-            Vector[] CurvePoints = new Vector[array_length];
+            Vector3[] CurvePoints = new Vector3[array_length]; 
 
-            Vector R;
+            Vector3 R;
 
             for (int i = 0; i < array_length; i++)
             {
@@ -308,10 +312,10 @@ namespace Example {
 
         //static string path = @"D:\Projects\Rabbit2\UpLeftCoordinateCurvesInit.txt";
 
-        static double distance_x = selectionRectWidth / 2;
-        static double distance_y = selectionRectWidth / 2;
+        static float distance_x = selectionRectWidth / 2;
+        static float distance_y = selectionRectWidth / 2;
 
-        static double selectionRectWidth = 0.01;
+        static float selectionRectWidth = 0.01f;
 
         static List<int> indexes = new List<int>();
         static List<int> orders = new List<int>();
@@ -475,11 +479,11 @@ namespace Example {
             */
         }
 
-        private static void DrawLine(Vector ra, Vector rb, Vector rc)
+        private static void DrawLine(Vector3 ra, Vector3 rb, Vector3 rc)
         {
-            Vector Ra = ra;
-            Vector Rb = rb;
-            Vector Rc = rc;
+            Vector3 Ra = ra;
+            Vector3 Rb = rb;
+            Vector3 Rc = rc;
 
             GL.PointSize(3);
             GL.Begin(PrimitiveType.Lines);
@@ -502,11 +506,11 @@ namespace Example {
 
                 for (int i = 0; i < curves.Length; i++)
                 {
-                    Vector resRa = curves[i].GetRa();
-                    Vector resRb = curves[i].GetRb();
-                    Vector resRc = curves[i].GetRc();
+                    Vector3 resRa = curves[i].GetRa();
+                    Vector3 resRb = curves[i].GetRb();
+                    Vector3 resRc = curves[i].GetRc();
 
-                    Vector[] curve_points = Curve.CalculateCurve(curves[i].GetRa(), curves[i].GetRb(), curves[i].GetRc());
+                    Vector3[] curve_points = Curve.CalculateCurve(curves[i].GetRa(), curves[i].GetRb(), curves[i].GetRc());
 
                     DrawCurve(curve_points);
                 }
@@ -518,17 +522,17 @@ namespace Example {
 
                 for (int i = 0; i < Curve.Frames[currentAnimationFrame1].Length; i++)
                 {
-                    Vector resRa = CalculateAnimationFrame(Curve.Frames[currentAnimationFrame1][i].GetRa(), Curve.Frames[currentAnimationFrame2][i].GetRa(), t);
-                    Vector resRb = CalculateAnimationFrame(Curve.Frames[currentAnimationFrame1][i].GetRb(), Curve.Frames[currentAnimationFrame2][i].GetRb(), t);
-                    Vector resRc = CalculateAnimationFrame(Curve.Frames[currentAnimationFrame1][i].GetRc(), Curve.Frames[currentAnimationFrame2][i].GetRc(), t);
+                    Vector3 resRa = CalculateAnimationFrame(Curve.Frames[currentAnimationFrame1][i].GetRa(), Curve.Frames[currentAnimationFrame2][i].GetRa(), t);
+                    Vector3 resRb = CalculateAnimationFrame(Curve.Frames[currentAnimationFrame1][i].GetRb(), Curve.Frames[currentAnimationFrame2][i].GetRb(), t);
+                    Vector3 resRc = CalculateAnimationFrame(Curve.Frames[currentAnimationFrame1][i].GetRc(), Curve.Frames[currentAnimationFrame2][i].GetRc(), t);
 
                     Curve.Result[i] = new Curve(resRa, resRb, resRc);
 
                     //new Curve(Curve.RelativeCoordinateCurves[i].GetRa(), Curve.RelativeCoordinateCurves[i].GetRb(), Curve.RelativeCoordinateCurves[i].GetRc())
-                    Vector[] curve_points = Curve.CalculateCurve(Curve.Frames[currentAnimationFrame1][i].GetRa(), Curve.Frames[currentAnimationFrame1][i].GetRb(), Curve.Frames[currentAnimationFrame1][i].GetRc());
-                    Vector[] curve_points2 = Curve.CalculateCurve(Curve.Frames[currentAnimationFrame2][i].GetRa(), Curve.Frames[currentAnimationFrame2][i].GetRb(), Curve.Frames[currentAnimationFrame2][i].GetRc());
+                    Vector3[] curve_points = Curve.CalculateCurve(Curve.Frames[currentAnimationFrame1][i].GetRa(), Curve.Frames[currentAnimationFrame1][i].GetRb(), Curve.Frames[currentAnimationFrame1][i].GetRc());
+                    Vector3[] curve_points2 = Curve.CalculateCurve(Curve.Frames[currentAnimationFrame2][i].GetRa(), Curve.Frames[currentAnimationFrame2][i].GetRb(), Curve.Frames[currentAnimationFrame2][i].GetRc());
 
-                    Vector[] animation = new Vector[curve_points.Length];
+                    Vector3[] animation = new Vector3[curve_points.Length];
 
                     for (int j = 0; j < curve_points.Length; j++)
                     {
@@ -541,7 +545,7 @@ namespace Example {
             }
         }
 
-        private static void DrawCurve(Vector[] curvePoints)
+        private static void DrawCurve(Vector3[] curvePoints)
         {
             GL.PointSize(3);
             GL.Begin(PrimitiveType.Points);
@@ -549,7 +553,7 @@ namespace Example {
 
            
 
-            foreach(Vector R in curvePoints)
+            foreach(Vector3 R in curvePoints)
             {
                 GL.Vertex2(R.X, R.Y);
             }
@@ -561,12 +565,12 @@ namespace Example {
 
      
 
-        private static Vector CalculateAnimationFrame(Vector R1, Vector R2, double t)
+        private static Vector3 CalculateAnimationFrame(Vector3 R1, Vector3 R2, float t)
         {
             return R1 * (1 - t) + R2 * t;
         }
 
-        private static void DrawSelectionRectangle(Vector R)
+        private static void DrawSelectionRectangle(Vector3 R)
         {
             GL.Begin(PrimitiveType.Quads);
             GL.Color3(0, 255, 0);
@@ -579,7 +583,7 @@ namespace Example {
             GL.End();
         }
 
-        public static void FindPoint(double rel_cursor_x, double rel_cursor_y)
+        public static void FindPoint(float rel_cursor_x, float rel_cursor_y)
         {
             int frame_index = (int)Curve.selectedFrame;
 
@@ -587,9 +591,9 @@ namespace Example {
             {
                 index = i;
 
-                Vector rel_point = Curve.Frames[frame_index][i].GetRa();
-                Vector rel_point2 = Curve.Frames[frame_index][i].GetRb();
-                Vector rel_point3 = Curve.Frames[frame_index][i].GetRc();
+                Vector3 rel_point = Curve.Frames[frame_index][i].GetRa();
+                Vector3 rel_point2 = Curve.Frames[frame_index][i].GetRb();
+                Vector3 rel_point3 = Curve.Frames[frame_index][i].GetRc();
 
                 if (CheckInSquare(rel_cursor_x, rel_cursor_y, rel_point))
                 {
@@ -644,11 +648,11 @@ namespace Example {
             
         }
 
-        public static void TryMovePoint(double rel_cursor_x, double rel_cursor_y)
+        public static void TryMovePoint(float rel_cursor_x, float rel_cursor_y)
         {
             int frame_index = (int)Curve.selectedFrame;
 
-            Vector r = new Vector(rel_cursor_x + distance_x, rel_cursor_y + distance_y);
+            Vector3 r = new Vector3(rel_cursor_x + distance_x, rel_cursor_y + distance_y, 1);
 
             if (order == 1)
             {                  
@@ -670,7 +674,7 @@ namespace Example {
              }
         }
 
-        public static bool CheckInSquare(double rel_cursor_x, double rel_cursor_y, Vector rel_point)
+        public static bool CheckInSquare(double rel_cursor_x, double rel_cursor_y, Vector3 rel_point)
         {
             if (rel_cursor_x >= rel_point.X - selectionRectWidth / 2 && rel_cursor_x <= rel_point.X + selectionRectWidth / 2 && rel_cursor_y >= rel_point.Y - selectionRectWidth / 2 && rel_cursor_y <= rel_point.Y + selectionRectWidth / 2)
             {                
