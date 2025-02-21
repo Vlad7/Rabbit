@@ -20,6 +20,9 @@ namespace Example {
     [DataContract(Name = "Curve")]   
     public class Curve
     {
+        /* Rotate must save !!!!!
+         */
+
         [DataMember()]
         private Vector3 r_a;
 
@@ -28,6 +31,8 @@ namespace Example {
 
         [DataMember()]
         private Vector3 r_c;
+
+        private float rotation_angle;
         
         public Vector3 GetRa()
         {
@@ -57,6 +62,16 @@ namespace Example {
         public void SetRc(Vector3 val)
         {
             r_c = val;
+        }
+
+        public float GetRotationAngle()
+        {
+            return rotation_angle;
+        }
+
+        public void SetRotationAngle(float angle)
+        {
+            rotation_angle = angle;
         }
 
         static double fieldWidth = 230;
@@ -386,9 +401,9 @@ namespace Example {
                 sign = 1;
             }*/
 
-            var c = Color4.FromHsv(new Vector4(alpha * hue, alpha * 0.75f, alpha * 0.75f, alpha));
+            //var c = Color4.FromHsv(new Vector4(alpha * hue, alpha * 0.75f, alpha * 0.75f, alpha));
             
-            GL.ClearColor(c);
+            GL.ClearColor(Color4.White);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.LoadIdentity();
             //GL.Begin(PrimitiveType.Triangles);

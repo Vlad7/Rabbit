@@ -6,6 +6,9 @@ using System.Windows.Controls;
 using System.Runtime.Serialization;
 using System.IO;
 using Microsoft.Win32;
+using System.Windows.Media;
+using OpenTK.Mathematics;
+using System.Windows.Media.Media3D;
 
 namespace Example {
     /// <summary>
@@ -14,6 +17,8 @@ namespace Example {
     public sealed partial class MainWindow {
 
         //private static Point oldPoint;
+
+        float sliderOldValue = 0;
 
         public MainWindow() {
             InitializeComponent();
@@ -136,58 +141,68 @@ namespace Example {
             InsetControl.InvalidateVisual();
         }
 
+        private void EuklidTransformImage(Matrix3 matrix)
+        {
+            for (int i = 0; i < Curve.Frames[(int)Curve.selectedFrame].Length; i++)
+            {
+                Curve curve = Curve.Frames[(int)Curve.selectedFrame][i];
+
+                Vector3 translatedRa = curve.GetRa() * matrix;
+                Vector3 translatedRb = curve.GetRb() * matrix;
+                Vector3 translatedRc = curve.GetRc() * matrix;
+
+                curve.SetRa(translatedRa);
+                curve.SetRb(translatedRb);
+                curve.SetRc(translatedRc);
+            }
+        }
+
         private void btnUpClick(object sender, RoutedEventArgs e)
         {
-            
-            for (int i = 0; i < Curve.Frames[(int)Curve.selectedFrame
-                ].Length; i++)
-            {
-                /*
-                Curve.Frames[(int)Curve.selectedFrame][i].SetRa(Curve.Frames[(int)Curve.selectedFrame][i].GetRa() + new Vector(0, 0.01));
-                Curve.Frames[(int)Curve.selectedFrame][i].SetRb(Curve.Frames[(int)Curve.selectedFrame][i].GetRb() + new Vector(0, 0.01));
-                Curve.Frames[(int)Curve.selectedFrame][i].SetRc(Curve.Frames[(int)Curve.selectedFrame][i].GetRc() + new Vector(0, 0.01));
-            */}
-        }
+
+            Matrix3 matrix = new Matrix3(new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, 0.01f, 1));
+
+            EuklidTransformImage(matrix);
+        }  
 
         private void btnDownClick(object sender, RoutedEventArgs e)
         {
+            Matrix3 matrix = new Matrix3(new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, -0.01f, 1));
 
-            for (int i = 0; i < Curve.Frames[(int)Curve.selectedFrame].Length; i++)
-            {/*
-                Curve.Frames[(int)Curve.selectedFrame][i].SetRa(Curve.Frames[(int)Curve.selectedFrame][i].GetRa() + new Vector(0, -0.01));
-                Curve.Frames[(int)Curve.selectedFrame][i].SetRb(Curve.Frames[(int)Curve.selectedFrame][i].GetRb() + new Vector(0, -0.01));
-                Curve.Frames[(int)Curve.selectedFrame][i].SetRc(Curve.Frames[(int)Curve.selectedFrame][i].GetRc() + new Vector(0, -0.01));
-            */}
+            EuklidTransformImage(matrix);
         }
 
         private void btnRightClick(object sender, RoutedEventArgs e)
         {
+            Matrix3 matrix = new Matrix3(new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(0.01f, 0, 1));
 
-            for (int i = 0; i < Curve.Frames[(int)Curve.selectedFrame].Length; i++)
-            {/*
-                Curve.Frames[(int)Curve.selectedFrame][i].SetRa(Curve.Frames[(int)Curve.selectedFrame][i].GetRa() + new Vector(0.01, 0));
-                Curve.Frames[(int)Curve.selectedFrame][i].SetRb(Curve.Frames[(int)Curve.selectedFrame][i].GetRb() + new Vector(0.01, 0));
-                Curve.Frames[(int)Curve.selectedFrame][i].SetRc(Curve.Frames[(int)Curve.selectedFrame][i].GetRc() + new Vector(0.01, 0));
-            */}
+            EuklidTransformImage(matrix);
         }
 
         private void btnLeftClick(object sender, RoutedEventArgs e)
         {
+            Matrix3 matrix = new Matrix3(new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(-0.01f, 0, 1));
 
-            for (int i = 0; i < Curve.Frames[(int)Curve.selectedFrame].Length; i++)
-            {/*
-                Curve.Frames[(int)Curve.selectedFrame][i].SetRa(Curve.Frames[(int)Curve.selectedFrame][i].GetRa() + new Vector(-0.01, 0));
-                Curve.Frames[(int)Curve.selectedFrame][i].SetRb(Curve.Frames[(int)Curve.selectedFrame][i].GetRb() + new Vector(-0.01, 0));
-                Curve.Frames[(int)Curve.selectedFrame][i].SetRc(Curve.Frames[(int)Curve.selectedFrame][i].GetRc() + new Vector(-0.01, 0));
-            */}
+            EuklidTransformImage(matrix);
         }
 
         private void sliderValueChanged(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(((Slider)sender).Value.ToString());
-          
+            float new_angle = (float)((Slider)sender).Value;
+            float teta = -(float)((new_angle - sliderOldValue) * Math.PI / 180);
+           
+
+            Matrix3 matrix = new Matrix3(new Vector3((float)Math.Cos(teta), (float)Math.Sin(teta), 0), new Vector3((float)(-Math.Sin(teta)), (float)Math.Cos(teta), 0), new Vector3(0, 0, 1));
+
+            EuklidTransformImage(matrix);
+
+            sliderOldValue = new_angle;
+
+            ExampleScene.Render();
         }
-        
+
+
+
 
         private void btnAddFrameClick(object sender, RoutedEventArgs e)
         {
