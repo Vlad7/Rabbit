@@ -1,4 +1,7 @@
-## GLWpfControl - A fast OpenGL Control for WPF
+## Animator with rabbit
+![Rabbit](https://github.com/user-attachments/assets/d6064a3a-2321-43dd-9ab0-48b8a3108632)
+
+## Project made based on GLWpfControl - A fast OpenGL Control for WPF
 ![Nuget](https://img.shields.io/nuget/v/OpenTK.GLWpfControl.svg?color=green)
 
 A native control for WPF in OpenTK 3.x and 4.x.
