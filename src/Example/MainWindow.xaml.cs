@@ -457,5 +457,10 @@ namespace Example {
 
 
         }
+
+        private void checkBoxEditing_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
