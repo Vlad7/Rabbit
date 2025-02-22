@@ -1,5 +1,6 @@
 ## Animator with rabbit
-![Rabbit](https://github.com/user-attachments/assets/d6064a3a-2321-43dd-9ab0-48b8a3108632)
+![Rabbit](https://github.com/user-attachments/assets/e1ef2a41-c18b-4fda-ac41-c9ab3c98bdd6)
+
 
 ## Project made based on GLWpfControl - A fast OpenGL Control for WPF
 ![Nuget](https://img.shields.io/nuget/v/OpenTK.GLWpfControl.svg?color=green)
